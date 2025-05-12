@@ -1,0 +1,53 @@
+---
+- name: Replace APT sources.list with contrib/non-free enabled
+  ansible.builtin.template:
+    src: sources.list.j2
+    dest: /etc/apt/sources.list
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install required kernel headers
+  ansible.builtin.apt:
+    name: "linux-headers-{{ ansible_kernel }}"
+    state: present
+
+- name: Ensure keyrings directory exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings/
+    state: directory
+    mode: "0755"
+
+- name: Download NVIDIA GPG key
+  ansible.builtin.get_url:
+    url: https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/3bf863cc.pub
+    dest: /etc/apt/trusted.gpg.d/nvidia.asc
+    mode: "0644"
+
+- name: Add NVIDIA apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/ /"
+    state: present
+    filename: nvidia
+
+- name: Update APT package list
+  ansible.builtin.apt:
+    update_cache: yes
+  become: true
+
+- name: Install NVIDIA driver with cuda support
+  ansible.builtin.apt:
+    name:
+      - nvidia-driver
+      - cuda
+      - nvidia-settings
+    state: present
+
+- name: Install NVIDIA Container Toolkit
+  include_tasks: "container-toolkit.yml"
+# - name: Reboot the system
+#   reboot:
+#     msg: "Rebooting after NVIDIA driver installation"
+#     connect_timeout: 5
+#     reboot_timeout: 600
+#   when: reboot_after_install and ansible_virtualization_type != "docker"
