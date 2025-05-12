@@ -1,0 +1,21 @@
+---
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/ollama"
+    state: directory
+
+- name: Run the Ollama docker container
+  community.docker.docker_container:
+    name: ollama
+    image: ollama/ollama
+    state: started
+    restart_policy: always
+    published_ports:
+      - "11434:11434"
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/ollama:/root/.ollama"
+    env:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+    networks:
+      - name: "{{ docker_network_name }}"

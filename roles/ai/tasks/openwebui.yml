@@ -1,0 +1,24 @@
+---
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/openwebui"
+    state: directory
+
+- name: Run the OpenWebUI docker container
+  community.docker.docker_container:
+    name: openwebui
+    image: ghcr.io/open-webui/open-webui:0.6.9
+    state: started
+    restart_policy: always
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/openwebui:/app/backend/data"
+    env:
+      OLLAMA_BASE_URL: http://ollama:11434
+    networks:
+      - name: "{{ docker_network_name }}"
+      - name: caddy
+    labels:
+      caddy: chat.poppylabs.dev
+      caddy.reverse_proxy: openwebui:8080
+      caddy.tls.dns: "cloudflare UD3537wqc9fJIHe9b78vhxySAf99FyhMuF_VBseT"
+      caddy.tls.resolvers: "1.1.1.1"
