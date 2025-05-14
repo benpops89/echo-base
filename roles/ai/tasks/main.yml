@@ -10,3 +10,6 @@
 
 - name: Include OpenWebUI Tasks
   include_tasks: openwebui.yml
+
+- name: Include ComfyUI Tasks
+  include_tasks: comfyui.yml
