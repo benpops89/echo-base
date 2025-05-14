@@ -4,14 +4,14 @@
     path: "{{ ansible_env['HOME'] }}/docker/comfyui"
     state: directory
 
-- name: Create folders for Docler volume mounts
+- name: Create folders for Docker volume mounts
   ansible.builtin.file:
     path: "{{ ansible_env['HOME'] }}/docker/comfyui/models"
     state: directory
 
 - name: Copy the Dockerfile over
   ansible.builtin.template:
-    src: Dockerfile.j2
+    src: ComfyUI.Dockerfile.j2
     dest: "{{ ansible_env['HOME'] }}/docker/comfyui/Dockerfile"
 
 - name: Build the docker image
