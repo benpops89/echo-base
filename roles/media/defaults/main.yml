@@ -1,0 +1,4 @@
+---
+makemkv_version: v25.10.1
+handbrake_version: 110x
+docker_network_name: media

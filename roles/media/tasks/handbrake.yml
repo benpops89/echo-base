@@ -1,0 +1,32 @@
+---
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/handbrake/{{ item }}"
+    state: directory
+  loop:
+    - config
+    - output
+
+- name: Run the Handbrake docker container
+  community.docker.docker_container:
+    name: handbrake
+    image: "zocker160/handbrake-nvenc:{{ handbrake_version }}"
+    state: started
+    restart_policy: always
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/handbrake/config:/config:rw"
+      - "{{ ansible_env['HOME'] }}/docker/makemkv/output:/storage:rw"
+      - "{{ ansible_env['HOME'] }}/docker/handbrake/output:/output:rw"
+    device_requests:
+      - driver: nvidia
+        count: -1
+        capabilities:
+          - [gpu]
+    networks:
+      - name: "{{ docker_network_name }}"
+      - name: caddy
+    labels:
+      caddy: handbrake.poppylabs.dev
+      caddy.reverse_proxy: handbrake:5800
+      caddy.tls.dns: "cloudflare {{ CLOUDFLARE_API_TOKEN }}"
+      caddy.tls.resolvers: 1.1.1.1

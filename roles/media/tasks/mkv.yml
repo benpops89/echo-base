@@ -1,0 +1,33 @@
+---
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/makemkv/{{ item }}"
+    state: directory
+  loop:
+    - config
+    - output
+
+- name: Run the MakeMKV docker container
+  community.docker.docker_container:
+    name: makemkv
+    image: "jlesage/makemkv:{{ makemkv_version }}"
+    state: started
+    restart_policy: always
+    published_ports:
+      - "5800:5800"
+    env:
+      CONTAINER_DEBUG: "1"
+    devices:
+      - "/dev/sr0"
+      - "/dev/sg13"
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/makemkv/config:/config:rw"
+      - "{{ ansible_env['HOME'] }}/docker/makemkv/output:/output:rw"
+    networks:
+      - name: "{{ docker_network_name }}"
+      - name: caddy
+    labels:
+      caddy: mkv.poppylabs.dev
+      caddy.reverse_proxy: makemkv:5800
+      caddy.tls.dns: "cloudflare {{ CLOUDFLARE_API_TOKEN }}"
+      caddy.tls.resolvers: 1.1.1.1
