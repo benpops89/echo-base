@@ -20,5 +20,5 @@
     labels:
       caddy: chat.poppylabs.dev
       caddy.reverse_proxy: openwebui:8080
-      caddy.tls.dns: "cloudflare UD3537wqc9fJIHe9b78vhxySAf99FyhMuF_VBseT"
-      caddy.tls.resolvers: "1.1.1.1"
+      caddy.tls.dns: "cloudflare {{ CLOUDFLARE_API_TOKEN }}"
+      caddy.tls.resolvers: 1.1.1.1
