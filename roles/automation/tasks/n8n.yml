@@ -1,0 +1,29 @@
+---
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/n8n/{{ item }}"
+    state: directory
+  loop:
+    - data
+
+- name: Run the n8n docker container
+  community.docker.docker_container:
+    name: n8n
+    image: "n8nio/n8n:{{ n8n_version }}"
+    state: started
+    restart_policy: always
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/n8n/data:/home/node/.n8n"
+    env:
+      GENERIC_TIMEZONE: Europe/London
+      TZ: Europe/London
+      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+      N8N_RUNNERS_ENABLED: "true"
+    networks:
+      - name: "{{ docker_network_name }}"
+      - name: caddy
+    labels:
+      caddy: n8n.poppylabs.dev
+      caddy.reverse_proxy: n8n:5678
+      caddy.tls.dns: "cloudflare {{ CLOUDFLARE_API_TOKEN }}"
+      caddy.tls.resolvers: 1.1.1.1

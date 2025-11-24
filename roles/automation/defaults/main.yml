@@ -1,0 +1,4 @@
+---
+kestra_version: v0.24.0
+n8n_version: 1.119.1
+docker_network_name: automation

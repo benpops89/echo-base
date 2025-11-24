@@ -1,0 +1,12 @@
+---
+- name: Create docker network
+  community.docker.docker_network:
+    name: "{{ docker_network_name }}"
+    driver: bridge
+    state: present
+
+- name: Install Kestra
+  include_tasks: "kestra.yml"
+
+- name: Install n8n
+  include_tasks: "n8n.yml"

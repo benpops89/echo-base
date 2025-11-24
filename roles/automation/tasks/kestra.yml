@@ -1,0 +1,36 @@
+---
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/kestra/{{ item }}"
+    state: directory
+  loop:
+    - storage
+    - tmp
+    - data
+
+- name: Run the Kestra docker container
+  community.docker.docker_container:
+    name: kestra
+    image: "kestra/kestra:{{ kestra_version }}"
+    command: server local
+    state: started
+    restart_policy: always
+    user: root
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "{{ ansible_env['HOME'] }}/docker/kestra/storage:/app/storage"
+      - "{{ ansible_env['HOME'] }}/docker/kestra/tmp:/tmp"
+      - "{{ ansible_env['HOME'] }}/docker/kestra/data:/data"
+    env:
+      KESTRA_CONFIGURATION: |
+        kestra:
+          tutorialFlows:
+            enabled: "false"
+    networks:
+      - name: "{{ docker_network_name }}"
+      - name: caddy
+    labels:
+      caddy: kestra.poppylabs.dev
+      caddy.reverse_proxy: kestra:8080
+      caddy.tls.dns: "cloudflare {{ CLOUDFLARE_API_TOKEN }}"
+      caddy.tls.resolvers: 1.1.1.1
