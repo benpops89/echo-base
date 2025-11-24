@@ -1,0 +1,9 @@
+---
+- name: Setup storage server with required services
+  hosts: coruscant
+  roles:
+    - nvidia
+    - ai
+    - automation
+    - media
+    - database

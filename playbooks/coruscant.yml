@@ -1,6 +1,0 @@
----
-- name: Install NVIDIA driver via role
-  hosts: coruscant
-  roles:
-    - nvidia
-    - ai
