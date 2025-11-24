@@ -1,0 +1,49 @@
+---
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/postgres/{{ item }}"
+    state: directory
+  loop:
+    - data
+
+- name: Run the Postgres docker container
+  community.docker.docker_container:
+    name: postgres
+    image: "postgres:{{ postgres_version }}"
+    state: started
+    restart_policy: always
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/postgres/data:/var/lib/postgresql"
+    env:
+      POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
+
+    networks:
+      - name: "{{ docker_network_name }}"
+    ports:
+      - "5432:5432"
+- name: Install required python module
+  ansible.builtin.pip:
+    name: psycopg[binary]>=3.1.8
+    extra_args: --break-system-packages
+
+# Create required users and credentials
+- name: Create databases users
+  community.postgresql.postgresql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password | ansible.builtin.sensitive }}"
+    login_host: 127.0.0.1
+    login_user: postgres
+    login_password: "{{ POSTGRES_PASSWORD }}"
+  loop: "{{ postgres_users }}"
+
+# Create required databases
+- name: Create databases
+  community.postgresql.postgresql_db:
+    name: "{{ item.name }}"
+    owner: "{{ item.owner }}"
+    comment: "{{ item.comment }}"
+    encoding: "{{ item.encoding }}"
+    login_host: 127.0.0.1
+    login_user: postgres
+    login_password: "{{ POSTGRES_PASSWORD }}"
+  loop: "{{ postgres_databases }}"

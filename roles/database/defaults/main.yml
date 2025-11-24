@@ -1,0 +1,13 @@
+---
+docker_network_name: database
+postgres_version: 18.0-alpine3.22
+
+postgres_users:
+  - name: kestra
+    password: "{{ KESTRA_DB_PASSWORD }}"
+
+postgres_databases:
+  - name: kestra
+    owner: kestra
+    comment: Metadata database for Kestra
+    encoding: UTF-8
