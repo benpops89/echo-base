@@ -5,9 +5,15 @@ postgres_version: 18.0-alpine3.22
 postgres_users:
   - name: kestra
     password: "{{ KESTRA_DB_PASSWORD }}"
+  - name: readeck
+    password: "{{ READECK_DB_PASSWORD }}"
 
 postgres_databases:
   - name: kestra
     owner: kestra
     comment: Metadata database for Kestra
+    encoding: UTF-8
+  - name: readeck
+    owner: readeck
+    comment: Database for readeck
     encoding: UTF-8

@@ -3,7 +3,8 @@
   hosts: coruscant
   roles:
     - nvidia
+    - database
     - ai
     - automation
     - media
-    - database
+    - pkm

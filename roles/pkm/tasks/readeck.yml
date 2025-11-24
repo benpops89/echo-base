@@ -1,0 +1,30 @@
+---
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/readeck/{{ item }}"
+    state: directory
+  loop:
+    - data
+
+- name: Run the READECK docker container
+  community.docker.docker_container:
+    name: readeck
+    image: "codeberg.org/readeck/readeck:{{ readeck_version }}"
+    state: started
+    restart_policy: always
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/readeck/data:/readeck"
+    env:
+      READECK_DATABASE_SOURCE: "postgres://readeck:{{ READECK_DB_PASSWORD }}@postgres:5432/readeck"
+      READECK_LOG_LEVEL: info
+      READECK_SERVER_HOST: 0.0.0.0
+      READECK_LOG_FORMAT: text
+    networks:
+      - name: "{{ docker_network_name }}"
+      - name: database
+      - name: caddy
+    labels:
+      caddy: read.poppylabs.dev
+      caddy.reverse_proxy: readeck:8000
+      caddy.tls.dns: "cloudflare {{ CLOUDFLARE_API_TOKEN }}"
+      caddy.tls.resolvers: 1.1.1.1

@@ -30,7 +30,7 @@
 - name: Create databases users
   community.postgresql.postgresql_user:
     name: "{{ item.name }}"
-    password: "{{ item.password | ansible.builtin.sensitive }}"
+    password: "{{ item.password }}"
     login_host: 127.0.0.1
     login_user: postgres
     login_password: "{{ POSTGRES_PASSWORD }}"
