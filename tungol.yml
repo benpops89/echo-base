@@ -1,0 +1,6 @@
+---
+- name: Setup VPS server
+  hosts: tungol
+  become: "yes"
+  roles:
+    - postfix

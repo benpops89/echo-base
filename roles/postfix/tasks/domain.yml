@@ -1,0 +1,3 @@
+---
+- name: Create A record for mail.tungol.cloud
+  community.general.cloudflare_dns:
