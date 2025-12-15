@@ -7,7 +7,7 @@
 - name: Run the Ollama docker container
   community.docker.docker_container:
     name: ollama
-    image: ollama/ollama
+    image: "ollama/ollama:{{ ollama_version }}"
     state: started
     restart_policy: always
     published_ports:
