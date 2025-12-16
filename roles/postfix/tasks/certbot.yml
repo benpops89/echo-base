@@ -1,0 +1,59 @@
+---
+- name: Install certbot + Cloudflare plugin
+  apt:
+    name:
+      - certbot
+      - python3-certbot-dns-cloudflare
+    state: present
+    update_cache: yes
+
+- name: Create Cloudflare credentials file
+  copy:
+    dest: /etc/letsencrypt/cloudflare.ini
+    content: |
+      dns_cloudflare_api_token = {{ cloudflare_api_token }}
+    owner: root
+    group: root
+    mode: "600"
+
+- name: Obtain Let’s Encrypt certificate (DNS-01)
+  command: >
+    certbot certonly
+    --dns-cloudflare
+    --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini
+    -d mail.{{ cloudflare_zone }}
+    --noninteractive
+    --agree-tos
+    --email {{ letsencrypt_email }}
+  args:
+    creates: "/etc/letsencrypt/live/mail.{{ cloudflare_zone }}"
+
+- name: Setup systemd timer for weekly renewal
+  copy:
+    dest: /etc/systemd/system/certbot-renew.service
+    content: |
+      [Unit]
+      Description=Renew LE certs and reload Postfix
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/certbot renew --quiet --deploy-hook "systemctl reload postfix"
+
+- name: Create systemd timer
+  copy:
+    dest: /etc/systemd/system/certbot-renew.timer
+    content: |
+      [Unit]
+      Description=Weekly LE certificate renewal
+
+      [Timer]
+      OnCalendar=Mon 02:00:00
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+
+- name: Enable timer
+  systemd:
+    name: certbot-renew.timer
+    enabled: yes
+    state: started
