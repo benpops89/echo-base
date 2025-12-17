@@ -1,0 +1,20 @@
+# Terraform/OpenTofu
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Plan files
+*.tfplan
+
+# Crash logs
+crash.log
+
+# Sensitive files
+.terraform.tfstate.lock.info

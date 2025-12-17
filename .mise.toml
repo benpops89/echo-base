@@ -1,0 +1,24 @@
+[tools]
+opentofu = "v1.11.1"
+
+[env]
+AWS_PROFILE = "terraform"
+
+[tasks.login]
+description = "Authenticate the AWS CLI"
+run = "aws sso login --profile terraform"
+
+[tasks.init]
+description = "Initialise the terraform project"
+dir = "{{cwd}}/terraform"
+run = "tofu init"
+
+[tasks.plan]
+description = "Plan the changes to resources"
+dir = "{{cwd}}/terraform"
+run = "tofu plan"
+
+[tasks.apply]
+description = "Apply changes to resources"
+dir = "{{cwd}}/terraform"
+run = "tofu apply"
