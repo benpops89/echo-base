@@ -2,5 +2,7 @@
 - name: Setup VPS server
   hosts: tungol
   become: "yes"
-  roles:
-    - postfix
+
+  tasks:
+    - name: Check server is up
+      ansible.builtin.ping:
