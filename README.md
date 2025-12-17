@@ -30,7 +30,7 @@
 
 - [mise](https://mise.jdx.dev/) 🔧 for tool management
 - AWS CLI configured with SSO profile "terraform" ☁️
-- [fnox](https://fnox.dev/) 🔐 for secret management (configured via `fnox.toml`)
+- [fnox](https://fnox.jdx.dev/) 🔐 for secret management (configured via `fnox.toml`)
 
 ### Ansible
 
