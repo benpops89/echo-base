@@ -2,9 +2,13 @@
 
 **Echo Base** is my Star Wars–themed infrastructure repo, inspired by the Rebel Alliance's hidden base on Hoth. It uses Ansible for configuration management and Terraform/OpenTofu for provisioning infrastructure in my homelab.
 
+## Infrastructure
+
+- **Coruscant** – Storage and AI server (playbook: `coruscant.yml`)
+- **Tungol** – VPS for additional services (playbook: `tungol.yml`)
+
 ## Structure
 
-- `playbooks/` – Entry point playbooks for each machine
 - `roles/` – Reusable Ansible components:
   - `ai/` – AI/ML tools (ComfyUI, Ollama, OpenWebUI)
   - `automation/` – Workflow automation (Kestra, n8n)
@@ -30,6 +34,16 @@ Install dependencies:
 
 ```bash
 ansible-galaxy install -r requirements.yml
+```
+
+Run playbooks:
+
+```bash
+# For Coruscant (storage/AI server)
+mise run coruscant
+
+# For Tungol (VPS)
+mise run tungol
 ```
 
 ### Terraform/OpenTofu
