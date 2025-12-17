@@ -4,6 +4,14 @@ opentofu = "v1.11.1"
 [env]
 AWS_PROFILE = "terraform"
 
+[tasks.coruscant]
+description = "Run the Ansible playbook for coruscant"
+run = "ansible-playbook coruscant.yml"
+
+[tasks.tungol]
+description = "Run the Ansible playbook for tungol"
+run = "ansible-playbook tungol.yml"
+
 [tasks.login]
 description = "Authenticate the AWS CLI"
 run = "aws sso login --profile terraform"
