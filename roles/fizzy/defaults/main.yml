@@ -1,0 +1,10 @@
+---
+docker_network_name: fizzy
+fizzy_version: sha-5b61682
+
+fizzy_secret_base_key: "{{ lookup('env', 'FIZZY_SECRET_BASE_KEY') }}"
+fizzy_mailer_from_address: "{{ lookup('env', 'FIZZY_MAILER_FROM_ADDRESS') }}"
+fizzy_smtp_address: "{{ lookup('env', 'FIZZY_SMTP_ADDRESS') }}"
+fizzy_smtp_port: "{{ lookup('env', 'FIZZY_SMTP_PORT') }}"
+fizzy_smtp_username: "{{ lookup('env', 'FIZZY_SMTP_USERNAME') }}"
+fizzy_smtp_password: "{{ lookup('env', 'FIZZY_SMTP_PASSWORD') }}"
