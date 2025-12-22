@@ -6,11 +6,11 @@ AWS_PROFILE = "terraform"
 
 [tasks.coruscant]
 description = "Run the Ansible playbook for coruscant"
-run = "ansible-playbook coruscant.yml"
+run = "ansible-playbook coruscant.yml --ask-become-pass"
 
 [tasks.tungol]
 description = "Run the Ansible playbook for tungol"
-run = "ansible-playbook tungol.yml"
+run = "ansible-playbook tungol.yml --ask-become-pass"
 
 [tasks.login]
 description = "Authenticate the AWS CLI"
