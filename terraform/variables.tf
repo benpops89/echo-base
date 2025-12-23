@@ -30,3 +30,15 @@ variable "cloudflare_zone_id" {
   description = "The Cloudflare Zone ID for your domain"
   type        = string
 }
+
+variable "cloudflare_r2_token" {
+  description = "Cloudflare API Token for R2"
+  type        = string
+  sensitive   = true
+}
+
+variable "cloudflare_r2_account_id" {
+  description = "Cloudflare R2 Account ID"
+  type        = string
+  sensitive   = true
+}
