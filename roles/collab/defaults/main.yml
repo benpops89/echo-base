@@ -1,7 +1,12 @@
 ---
-docker_network_name: fizzy
-fizzy_version: sha-5b61682
+docker_network_name: collab
 
+# Campfire
+campfire_version: 1.4.3
+campfire_secret_base_key: "{{ lookup('env', 'CAMPFIRE_SECRET_BASE_KEY') }}"
+
+# Fizzy
+fizzy_version: sha-5b61682
 fizzy_secret_base_key: "{{ lookup('env', 'FIZZY_SECRET_BASE_KEY') }}"
 fizzy_mailer_from_address: "{{ lookup('env', 'FIZZY_MAILER_FROM_ADDRESS') }}"
 fizzy_smtp_address: "{{ lookup('env', 'FIZZY_SMTP_ADDRESS') }}"

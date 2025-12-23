@@ -1,0 +1,34 @@
+---
+- name: Create docker network
+  community.docker.docker_network:
+    name: "{{ docker_network_name }}"
+    driver: bridge
+    state: present
+
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/campfire/{{ item }}"
+    state: directory
+  loop:
+    - data
+
+- name: Run the Campfire docker container
+  community.docker.docker_container:
+    name: campfire
+    image: "ghcr.io/basecamp/once-campfire:{{ campfire_version }}"
+    state: started
+    restart_policy: always
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/campfire/data:/rails/storage"
+    env:
+      SECRET_KEY_BASE: "{{ campfire_secret_base_key }}"
+      DISABLE_SSL: "true"
+
+    networks:
+      - name: "{{ docker_network_name }}"
+      - name: caddy
+    labels:
+      caddy: talk.poppylabs.dev
+      caddy.reverse_proxy: campfire:80
+      caddy.tls.dns: "cloudflare {{ CLOUDFLARE_API_TOKEN }}"
+      caddy.tls.resolvers: 1.1.1.1
