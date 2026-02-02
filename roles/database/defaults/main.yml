@@ -4,9 +4,9 @@ postgres_version: 18.0-alpine3.22
 
 postgres_users:
   - name: kestra
-    password: "{{ KESTRA_DB_PASSWORD }}"
+    password: "{{ kestra_db_password }}"
   - name: readeck
-    password: "{{ READECK_DB_PASSWORD }}"
+    password: "{{ readeck_db_password }}"
 
 postgres_databases:
   - name: kestra

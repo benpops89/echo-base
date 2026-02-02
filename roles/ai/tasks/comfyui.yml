@@ -39,5 +39,5 @@
     labels:
       caddy: comfyui.poppylabs.dev
       caddy.reverse_proxy: comfyui:8188
-      caddy.tls.dns: "cloudflare {{ CLOUDFLARE_API_TOKEN }}"
+      caddy.tls.dns: "cloudflare {{ cloudflare_api_token }}"
       caddy.tls.resolvers: 1.1.1.1

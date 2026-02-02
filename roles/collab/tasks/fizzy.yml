@@ -18,6 +18,7 @@
     image: "ghcr.io/basecamp/fizzy:{{ fizzy_version }}"
     state: started
     restart_policy: always
+    command: ["./bin/thrust", "./bin/rails", "server", "-b", "0.0.0.0"]
     volumes:
       - "{{ ansible_env['HOME'] }}/docker/fizzy/data:/rails/storage"
     env:
@@ -28,6 +29,8 @@
       SMTP_PORT: "{{ fizzy_smtp_port }}"
       SMTP_USERNAME: "{{ fizzy_smtp_username }}"
       SMTP_PASSWORD: "{{ fizzy_smtp_password }}"
+      WEB_CONCURRENCY: "2"
+      JOB_CONCURRENCY: "1"
 
     networks:
       - name: "{{ docker_network_name }}"
@@ -35,5 +38,5 @@
     labels:
       caddy: fizzy.poppylabs.dev
       caddy.reverse_proxy: fizzy:80
-      caddy.tls.dns: "cloudflare {{ CLOUDFLARE_API_TOKEN }}"
+      caddy.tls.dns: "cloudflare {{ cloudflare_api_token }}"
       caddy.tls.resolvers: 1.1.1.1

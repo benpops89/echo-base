@@ -15,7 +15,7 @@
     volumes:
       - "{{ ansible_env['HOME'] }}/docker/postgres/data:/var/lib/postgresql"
     env:
-      POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
+      POSTGRES_PASSWORD: "{{ postgres_password }}"
 
     networks:
       - name: "{{ docker_network_name }}"
@@ -33,7 +33,7 @@
     password: "{{ item.password }}"
     login_host: 127.0.0.1
     login_user: postgres
-    login_password: "{{ POSTGRES_PASSWORD }}"
+    login_password: "{{ postgres_password }}"
   loop: "{{ postgres_users }}"
 
 # Create required databases
@@ -45,5 +45,5 @@
     encoding: "{{ item.encoding }}"
     login_host: 127.0.0.1
     login_user: postgres
-    login_password: "{{ POSTGRES_PASSWORD }}"
+    login_password: "{{ postgres_password }}"
   loop: "{{ postgres_databases }}"

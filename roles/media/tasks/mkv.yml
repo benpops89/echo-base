@@ -29,5 +29,5 @@
     labels:
       caddy: mkv.poppylabs.dev
       caddy.reverse_proxy: makemkv:5800
-      caddy.tls.dns: "cloudflare {{ CLOUDFLARE_API_TOKEN }}"
+      caddy.tls.dns: "cloudflare {{ cloudflare_api_token }}"
       caddy.tls.resolvers: 1.1.1.1
