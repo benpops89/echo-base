@@ -9,7 +9,7 @@
 - name: Run the Postgres docker container
   community.docker.docker_container:
     name: postgres
-    image: "postgres:{{ postgres_version }}"
+    image: "pgvector/pgvector:{{ postgres_version }}"
     state: started
     restart_policy: always
     volumes:
@@ -47,3 +47,14 @@
     login_user: postgres
     login_password: "{{ postgres_password }}"
   loop: "{{ postgres_databases }}"
+
+# Enable extensions
+- name: Ensure specific extensions are enabled
+  community.postgresql.postgresql_ext:
+    login_db: "{{ item.0.name }}"
+    name: "{{ item.1 }}"
+    login_user: postgres
+    login_password: "{{ postgres_password }}"
+    login_host: "127.0.0.1"
+    state: present
+  loop: "{{ postgres_databases | subelements('extensions', skip_missing=True) }}"

@@ -1,12 +1,14 @@
 ---
 docker_network_name: database
-postgres_version: 18.0-alpine3.22
+postgres_version: 0.8.1-pg18-trixie
 
 postgres_users:
   - name: kestra
     password: "{{ kestra_db_password }}"
   - name: readeck
     password: "{{ readeck_db_password }}"
+  - name: librechat
+    password: "{{ librechat_db_password }}"
 
 postgres_databases:
   - name: kestra
@@ -17,3 +19,9 @@ postgres_databases:
     owner: readeck
     comment: Database for readeck
     encoding: UTF-8
+  - name: librechat
+    owner: librechat
+    comment: Database for librechat
+    encoding: UTF-8
+    extensions:
+      - vector
