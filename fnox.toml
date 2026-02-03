@@ -25,3 +25,4 @@ READECK_DB_PASSWORD= { provider = "pass", value = "READECK_DB_PASSWORD" }
 LIBRECHAT_DB_PASSWORD= { provider = "pass", value = "LIBRECHAT_DB_PASSWORD" }
 MONGO_INITDB_ROOT_PASSWORD= { provider = "pass", value = "MONGO_INITDB_ROOT_PASSWORD" }
 LIBRECHAT_MONGODB_PASSWORD= { provider = "pass", value = "LIBRECHAT_MONGODB_PASSWORD" }
+MEILI_MASTER_KEY= { provider = "pass", value = "MEILI_MASTER_KEY" }

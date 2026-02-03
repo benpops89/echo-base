@@ -10,3 +10,6 @@
 
 - name: Install and Configure MongoDB
   include_tasks: "mongo.yml"
+
+- name: Install and Configure Meilisearch
+  include_tasks: "meilisearch.yml"

@@ -34,3 +34,5 @@ mongodb_users:
     roles:
       - db: librechat
         role: readWrite
+
+meilisearch_version: v1.35.0
