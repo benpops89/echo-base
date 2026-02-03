@@ -23,3 +23,5 @@ POSTGRES_PASSWORD= { provider = "pass", value = "POSTGRES_PASSWORD" }
 KESTRA_DB_PASSWORD= { provider = "pass", value = "KESTRA_DB_PASSWORD" }
 READECK_DB_PASSWORD= { provider = "pass", value = "READECK_DB_PASSWORD" }
 LIBRECHAT_DB_PASSWORD= { provider = "pass", value = "LIBRECHAT_DB_PASSWORD" }
+MONGO_INITDB_ROOT_PASSWORD= { provider = "pass", value = "MONGO_INITDB_ROOT_PASSWORD" }
+LIBRECHAT_MONGODB_PASSWORD= { provider = "pass", value = "LIBRECHAT_MONGODB_PASSWORD" }

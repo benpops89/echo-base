@@ -1,0 +1,41 @@
+---
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/mongodb/{{ item }}"
+    state: directory
+  loop:
+    - data
+
+- name: Run the MongoDB docker container
+  community.docker.docker_container:
+    name: mongodb
+    image: "mongo:{{ mongodb_version }}"
+    state: started
+    restart_policy: always
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/mongodb/data:/data/db"
+    env:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: "{{ mongo_initdb_root_password }}"
+
+    networks:
+      - name: "{{ docker_network_name }}"
+    ports:
+      - "27017:27017"
+
+- name: Install required python module
+  ansible.builtin.pip:
+    name: pymongo
+    extra_args: --break-system-packages
+
+# Create required users and credentials
+- name: Create databases users
+  community.mongodb.mongodb_user:
+    login_user: admin
+    login_password: "{{ mongo_initdb_root_password }}"
+    database: admin
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    roles: "{{ item.roles }}"
+    state: present
+  loop: "{{ mongodb_users }}"

@@ -25,3 +25,12 @@ postgres_databases:
     encoding: UTF-8
     extensions:
       - vector
+
+mongodb_version: 8.2.4
+
+mongodb_users:
+  - name: librechat
+    password: "{{ librechat_mongodb_password }}"
+    roles:
+      - db: librechat
+        role: readWrite
