@@ -13,6 +13,30 @@
     src: librechat.yaml.j2
     dest: "{{ ansible_env['HOME'] }}/docker/librechat/librechat.yaml"
 
+- name: Run the Librechat RAG docker container
+  community.docker.docker_container:
+    name: librechat-rag
+    image: "ghcr.io/danny-avila/librechat-rag-api-dev:{{ librechat_rag_version }}"
+    state: started
+    restart_policy: always
+    env:
+      POSTGRES_DB: librechat
+      POSTGRES_USER: librechat
+      POSTGRES_PASSWORD: "{{ librechat_db_password }}"
+      DB_HOST: postgres
+      EMBEDDINGS_PROVIDER: ollama
+      EMBEDDINGS_MODEL: nomic-embed-text
+      OLLAMA_BASE_URL: http://ollama:11434
+
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/librechat/images:/app/client/public/images"
+      - "{{ ansible_env['HOME'] }}/docker/librechat/uploads:/app/uploads"
+      - "{{ ansible_env['HOME'] }}/docker/librechat/logs:/app/logs"
+      - "{{ ansible_env['HOME'] }}/docker/librechat/librechat.yaml:/app/librechat.yaml:ro"
+    networks:
+      - name: "{{ docker_network_name }}"
+      - name: database
+
 - name: Run the Librechat docker container
   community.docker.docker_container:
     name: librechat
@@ -28,6 +52,7 @@
       CREDS_IV: "{{ librechat_creds_iv }}"
       JWT_SECRET: "{{ librechat_jwt_secret }}"
       JWT_REFRESH_SECRET: "{{ librechat_jwt_refresh_secret }}"
+      RAG_API_URL: http://librechat-rag:8000
       EMAIL_SERVICE: SES
       EMAIL_USERNAME: "{{ librechat_smtp_username }}"
       EMAIL_PASSWORD: "{{ librechat_smtp_password }}"
@@ -39,7 +64,6 @@
       ALLOW_ACCOUNT_DELETION: "true"
       ALLOW_UNVERIFIED_EMAIL_LOGIN: "false"
       MIN_PASSWORD_LENGTH: "10"
-
     volumes:
       - "{{ ansible_env['HOME'] }}/docker/librechat/images:/app/client/public/images"
       - "{{ ansible_env['HOME'] }}/docker/librechat/uploads:/app/uploads"
