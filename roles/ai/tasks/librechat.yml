@@ -8,10 +8,15 @@
     - uploads
     - logs
 
+- name: Copy librechat.yaml config
+  ansible.builtin.template:
+    src: librechat.yaml.j2
+    dest: "{{ ansible_env['HOME'] }}/docker/librechat/librechat.yaml"
+
 - name: Run the Librechat docker container
   community.docker.docker_container:
     name: librechat
-    image: "ghcr.io/danny-avila/librechat-dev:{{ librechat_version }}"
+    image: "ghcr.io/danny-avila/librechat:{{ librechat_version }}"
     state: started
     restart_policy: always
     env:
@@ -39,6 +44,7 @@
       - "{{ ansible_env['HOME'] }}/docker/librechat/images:/app/client/public/images"
       - "{{ ansible_env['HOME'] }}/docker/librechat/uploads:/app/uploads"
       - "{{ ansible_env['HOME'] }}/docker/librechat/logs:/app/logs"
+      - "{{ ansible_env['HOME'] }}/docker/librechat/librechat.yaml:/app/librechat.yaml:ro"
     networks:
       - name: "{{ docker_network_name }}"
       - name: caddy
