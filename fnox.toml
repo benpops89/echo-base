@@ -5,7 +5,7 @@ type = "password-store"
 prefix = "fnox/"
 
 [secrets]
-FIZZY_MAILER_FROM_ADDRESS= { provider = "pass", value = "FIZZY_MAILER_FROM_ADDRESS" }
+SMTP_MAILER_FROM_ADDRESS= { provider = "pass", value = "SMTP_MAILER_FROM_ADDRESS" }
 FIZZY_SMTP_ADDRESS= { provider = "pass", value = "FIZZY_SMTP_ADDRESS" }
 FIZZY_SMTP_PORT= { provider = "pass", value = "FIZZY_SMTP_PORT" }
 FIZZY_SMTP_USERNAME= { provider = "pass", value = "FIZZY_SMTP_USERNAME" }
@@ -26,3 +26,9 @@ LIBRECHAT_DB_PASSWORD= { provider = "pass", value = "LIBRECHAT_DB_PASSWORD" }
 MONGO_INITDB_ROOT_PASSWORD= { provider = "pass", value = "MONGO_INITDB_ROOT_PASSWORD" }
 LIBRECHAT_MONGODB_PASSWORD= { provider = "pass", value = "LIBRECHAT_MONGODB_PASSWORD" }
 MEILI_MASTER_KEY= { provider = "pass", value = "MEILI_MASTER_KEY" }
+LIBRECHAT_CREDS_KEY= { provider = "pass", value = "LIBRECHAT_CREDS_KEY" }
+LIBRECHAT_CREDS_IV= { provider = "pass", value = "LIBRECHAT_CREDS_IV" }
+LIBRECHAT_JWT_SECRET= { provider = "pass", value = "LIBRECHAT_JWT_SECRET" }
+LIBRECHAT_JWT_REFRESH_SECRET= { provider = "pass", value = "LIBRECHAT_JWT_REFRESH_SECRET" }
+LIBRECHAT_SMTP_USERNAME= { provider = "pass", value = "LIBRECHAT_SMTP_USERNAME" }
+LIBRECHAT_SMTP_PASSWORD= { provider = "pass", value = "LIBRECHAT_SMTP_PASSWORD" }

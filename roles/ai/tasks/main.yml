@@ -13,3 +13,6 @@
 
 - name: Include ComfyUI Tasks
   include_tasks: comfyui.yml
+
+- name: Include LibreChat Tasks
+  include_tasks: librechat.yml

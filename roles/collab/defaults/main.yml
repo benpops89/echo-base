@@ -8,7 +8,6 @@ campfire_secret_base_key: "{{ lookup('env', 'CAMPFIRE_SECRET_BASE_KEY') }}"
 # Fizzy
 fizzy_version: sha-231fa31
 fizzy_secret_base_key: "{{ lookup('env', 'FIZZY_SECRET_BASE_KEY') }}"
-fizzy_mailer_from_address: "{{ lookup('env', 'FIZZY_MAILER_FROM_ADDRESS') }}"
 fizzy_smtp_address: "{{ lookup('env', 'FIZZY_SMTP_ADDRESS') }}"
 fizzy_smtp_port: "{{ lookup('env', 'FIZZY_SMTP_PORT') }}"
 fizzy_smtp_username: "{{ lookup('env', 'FIZZY_SMTP_USERNAME') }}"

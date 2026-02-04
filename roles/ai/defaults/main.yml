@@ -1,3 +1,4 @@
 ---
 docker_network_name: ai
 ollama_version: 0.13.0
+librechat_version: 6960bd3cc3e20e06f17a4b18d4b1c1ab0b4b4f98

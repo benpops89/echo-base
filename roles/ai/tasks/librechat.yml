@@ -1,0 +1,50 @@
+---
+- name: Create folder to store data
+  ansible.builtin.file:
+    path: "{{ ansible_env['HOME'] }}/docker/librechat/{{ item }}"
+    state: directory
+  loop:
+    - images
+    - uploads
+    - logs
+
+- name: Run the Librechat docker container
+  community.docker.docker_container:
+    name: librechat
+    image: "ghcr.io/danny-avila/librechat-dev:{{ librechat_version }}"
+    state: started
+    restart_policy: always
+    env:
+      MONGO_URI: "mongodb://librechat:{{ librechat_mongodb_password | urlencode }}@mongodb:27017/librechat?authSource=admin"
+      MEILI_HOST: http://meilisearch:7700
+      MEILI_MASTER_KEY: "{{ meili_master_key }}"
+      SEARCH: "true"
+      CREDS_KEY: "{{ librechat_creds_key }}"
+      CREDS_IV: "{{ librechat_creds_iv }}"
+      JWT_SECRET: "{{ librechat_jwt_secret }}"
+      JWT_REFRESH_SECRET: "{{ librechat_jwt_refresh_secret }}"
+      EMAIL_SERVICE: SES
+      EMAIL_USERNAME: "{{ librechat_smtp_username }}"
+      EMAIL_PASSWORD: "{{ librechat_smtp_password }}"
+      EMAIL_FROM_NAME: LibreChat
+      EMAIL_FROM: "{{ smtp_mailer_from_address }}"
+      ALLOW_EMAIL_LOGIN: "true"
+      ALLOW_REGISTRATION: "false"
+      ALLOW_PASSWORD_RESET: "true"
+      ALLOW_ACCOUNT_DELETION: "true"
+      ALLOW_UNVERIFIED_EMAIL_LOGIN: "false"
+      MIN_PASSWORD_LENGTH: "10"
+
+    volumes:
+      - "{{ ansible_env['HOME'] }}/docker/librechat/images:/app/client/public/images"
+      - "{{ ansible_env['HOME'] }}/docker/librechat/uploads:/app/uploads"
+      - "{{ ansible_env['HOME'] }}/docker/librechat/logs:/app/logs"
+    networks:
+      - name: "{{ docker_network_name }}"
+      - name: caddy
+      - name: database
+    labels:
+      caddy: librechat.poppylabs.dev
+      caddy.reverse_proxy: librechat:3080
+      caddy.tls.dns: "cloudflare {{ cloudflare_api_token }}"
+      caddy.tls.resolvers: 1.1.1.1

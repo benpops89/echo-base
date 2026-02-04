@@ -12,6 +12,10 @@
     image: "getmeili/meilisearch:{{ meilisearch_version }}"
     state: started
     restart_policy: always
+    networks:
+      - name: "{{ docker_network_name }}"
+        aliases:
+          - meilisearch
     volumes:
       - "{{ ansible_env['HOME'] }}/docker/meilisearch/data:/meili_data"
     env:

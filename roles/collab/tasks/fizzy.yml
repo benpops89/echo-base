@@ -24,7 +24,7 @@
     env:
       SECRET_KEY_BASE: "{{ fizzy_secret_base_key }}"
       BASE_URL: fizzy.poppylabs.dev
-      MAILER_FROM_ADDRESS: "{{ fizzy_mailer_from_address }}"
+      MAILER_FROM_ADDRESS: "{{ smtp_mailer_from_address }}"
       SMTP_ADDRESS: "{{ fizzy_smtp_address }}"
       SMTP_PORT: "{{ fizzy_smtp_port }}"
       SMTP_USERNAME: "{{ fizzy_smtp_username }}"
