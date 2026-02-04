@@ -32,3 +32,5 @@ LIBRECHAT_JWT_SECRET= { provider = "pass", value = "LIBRECHAT_JWT_SECRET" }
 LIBRECHAT_JWT_REFRESH_SECRET= { provider = "pass", value = "LIBRECHAT_JWT_REFRESH_SECRET" }
 LIBRECHAT_SMTP_USERNAME= { provider = "pass", value = "LIBRECHAT_SMTP_USERNAME" }
 LIBRECHAT_SMTP_PASSWORD= { provider = "pass", value = "LIBRECHAT_SMTP_PASSWORD" }
+FIZZY_API_BASE_URL= { provider = "pass", value = "FIZZY_API_BASE_URL" }
+FIZZY_API_TOKEN= { provider = "pass", value = "FIZZY_API_TOKEN" }

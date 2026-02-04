@@ -13,6 +13,18 @@
     src: librechat.yaml.j2
     dest: "{{ ansible_env['HOME'] }}/docker/librechat/librechat.yaml"
 
+- name: Run the Fizzy MCP docker container
+  community.docker.docker_container:
+    name: fizzy-mcp
+    image: ghcr.io/benpops89/fizzy-mcp:latest
+    state: started
+    restart_policy: always
+    env:
+      FIZZY_API_BASE_URL: "{{ fizzy_api_base_url }}"
+      FIZZY_API_TOKEN: "{{ fizzy_api_token }}"
+    networks:
+      - name: "{{ docker_network_name }}"
+
 - name: Run the Librechat RAG docker container
   community.docker.docker_container:
     name: librechat-rag
@@ -27,7 +39,6 @@
       EMBEDDINGS_PROVIDER: ollama
       EMBEDDINGS_MODEL: nomic-embed-text
       OLLAMA_BASE_URL: http://ollama:11434
-
     volumes:
       - "{{ ansible_env['HOME'] }}/docker/librechat/images:/app/client/public/images"
       - "{{ ansible_env['HOME'] }}/docker/librechat/uploads:/app/uploads"
