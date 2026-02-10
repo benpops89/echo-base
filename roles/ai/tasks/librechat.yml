@@ -20,10 +20,11 @@
     state: started
     restart_policy: always
     env:
-      FIZZY_API_BASE_URL: "{{ fizzy_api_base_url }}"
+      FIZZY_API_BASE_URL: http://fizzy
       FIZZY_API_TOKEN: "{{ fizzy_api_token }}"
     networks:
       - name: "{{ docker_network_name }}"
+      - name: collab
 
 - name: Run the Librechat RAG docker container
   community.docker.docker_container:
