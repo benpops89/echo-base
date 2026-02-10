@@ -27,3 +27,12 @@
       caddy.reverse_proxy: n8n:5678
       caddy.tls.dns: "cloudflare {{ cloudflare_api_token }}"
       caddy.tls.resolvers: 1.1.1.1
+
+- name: Run the Echo docker container
+  community.docker.docker_container:
+    name: echo
+    image: ghcr.io/benpops89/echo:latest
+    state: started
+    restart_policy: always
+    networks:
+      - name: "{{ docker_network_name }}"
