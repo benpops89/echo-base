@@ -7,7 +7,7 @@
 
 - name: Create folder to store data
   ansible.builtin.file:
-    path: "{{ ansible_env['HOME'] }}/docker/campfire/{{ item }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/docker/campfire/{{ item }}"
     state: directory
   loop:
     - data
@@ -19,7 +19,7 @@
     state: started
     restart_policy: always
     volumes:
-      - "{{ ansible_env['HOME'] }}/docker/campfire/data:/rails/storage"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/campfire/data:/rails/storage"
     env:
       SECRET_KEY_BASE: "{{ campfire_secret_base_key }}"
       DISABLE_SSL: "true"

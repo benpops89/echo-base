@@ -7,7 +7,7 @@
 
 - name: Create folder to store data
   ansible.builtin.file:
-    path: "{{ ansible_env['HOME'] }}/docker/fizzy/{{ item }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/docker/fizzy/{{ item }}"
     state: directory
   loop:
     - data
@@ -20,7 +20,7 @@
     restart_policy: always
     command: ["./bin/thrust", "./bin/rails", "server", "-b", "0.0.0.0"]
     volumes:
-      - "{{ ansible_env['HOME'] }}/docker/fizzy/data:/rails/storage"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/fizzy/data:/rails/storage"
     env:
       SECRET_KEY_BASE: "{{ fizzy_secret_base_key }}"
       BASE_URL: fizzy.poppylabs.dev

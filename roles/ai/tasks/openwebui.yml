@@ -1,7 +1,7 @@
 ---
 - name: Create folder to store data
   ansible.builtin.file:
-    path: "{{ ansible_env['HOME'] }}/docker/openwebui"
+    path: "{{ ansible_facts['env']['HOME'] }}/docker/openwebui"
     state: directory
 
 - name: Run the OpenWebUI docker container
@@ -11,7 +11,7 @@
     state: started
     restart_policy: always
     volumes:
-      - "{{ ansible_env['HOME'] }}/docker/openwebui:/app/backend/data"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/openwebui:/app/backend/data"
     env:
       OLLAMA_BASE_URL: http://ollama:11434
     networks:

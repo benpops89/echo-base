@@ -1,7 +1,7 @@
 ---
 - name: Create folder to store data
   ansible.builtin.file:
-    path: "{{ ansible_env['HOME'] }}/docker/kestra/{{ item }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/docker/kestra/{{ item }}"
     state: directory
   loop:
     - storage
@@ -18,9 +18,9 @@
     user: root
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "{{ ansible_env['HOME'] }}/docker/kestra/storage:/app/storage"
-      - "{{ ansible_env['HOME'] }}/docker/kestra/tmp:/tmp"
-      - "{{ ansible_env['HOME'] }}/docker/kestra/data:/data"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/kestra/storage:/app/storage"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/kestra/tmp:/tmp"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/kestra/data:/data"
     env:
       KESTRA_CONFIGURATION: |
         kestra:

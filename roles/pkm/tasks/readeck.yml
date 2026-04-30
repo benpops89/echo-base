@@ -1,7 +1,7 @@
 ---
 - name: Create folder to store data
   ansible.builtin.file:
-    path: "{{ ansible_env['HOME'] }}/docker/readeck/{{ item }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/docker/readeck/{{ item }}"
     state: directory
   loop:
     - data
@@ -13,7 +13,7 @@
     state: started
     restart_policy: always
     volumes:
-      - "{{ ansible_env['HOME'] }}/docker/readeck/data:/readeck"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/readeck/data:/readeck"
     env:
       READECK_DATABASE_SOURCE: "postgres://readeck:{{ readeck_db_password }}@postgres:5432/readeck"
       READECK_LOG_LEVEL: info

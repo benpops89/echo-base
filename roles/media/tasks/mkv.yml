@@ -1,7 +1,7 @@
 ---
 - name: Create folder to store data
   ansible.builtin.file:
-    path: "{{ ansible_env['HOME'] }}/docker/makemkv/{{ item }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/docker/makemkv/{{ item }}"
     state: directory
   loop:
     - config
@@ -21,8 +21,8 @@
       - "/dev/sr0"
       - "/dev/sg13"
     volumes:
-      - "{{ ansible_env['HOME'] }}/docker/makemkv/config:/config:rw"
-      - "{{ ansible_env['HOME'] }}/docker/makemkv/output:/output:rw"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/makemkv/config:/config:rw"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/makemkv/output:/output:rw"
     networks:
       - name: "{{ docker_network_name }}"
       - name: caddy

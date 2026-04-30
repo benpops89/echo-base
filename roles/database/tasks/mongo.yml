@@ -1,7 +1,7 @@
 ---
 - name: Create folder to store data
   ansible.builtin.file:
-    path: "{{ ansible_env['HOME'] }}/docker/mongodb/{{ item }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/docker/mongodb/{{ item }}"
     state: directory
   loop:
     - data
@@ -13,7 +13,7 @@
     state: started
     restart_policy: always
     volumes:
-      - "{{ ansible_env['HOME'] }}/docker/mongodb/data:/data/db"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/mongodb/data:/data/db"
     env:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: "{{ mongo_initdb_root_password }}"

@@ -1,7 +1,7 @@
 ---
 - name: Create folder to store data
   ansible.builtin.file:
-    path: "{{ ansible_env['HOME'] }}/docker/meilisearch/{{ item }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/docker/meilisearch/{{ item }}"
     state: directory
   loop:
     - data
@@ -17,7 +17,7 @@
         aliases:
           - meilisearch
     volumes:
-      - "{{ ansible_env['HOME'] }}/docker/meilisearch/data:/meili_data"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/meilisearch/data:/meili_data"
     env:
       MEILI_NO_ANALYTICS: "true"
       MEILI_MASTER_KEY: "{{ meili_master_key }}"

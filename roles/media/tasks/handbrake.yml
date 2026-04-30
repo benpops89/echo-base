@@ -1,7 +1,7 @@
 ---
 - name: Create folder to store data
   ansible.builtin.file:
-    path: "{{ ansible_env['HOME'] }}/docker/handbrake/{{ item }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/docker/handbrake/{{ item }}"
     state: directory
   loop:
     - config
@@ -14,9 +14,9 @@
     state: started
     restart_policy: always
     volumes:
-      - "{{ ansible_env['HOME'] }}/docker/handbrake/config:/config:rw"
-      - "{{ ansible_env['HOME'] }}/docker/makemkv/output:/storage:rw"
-      - "{{ ansible_env['HOME'] }}/docker/handbrake/output:/output:rw"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/handbrake/config:/config:rw"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/makemkv/output:/storage:rw"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/handbrake/output:/output:rw"
     device_requests:
       - driver: nvidia
         count: -1

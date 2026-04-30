@@ -1,7 +1,7 @@
 ---
 - name: Create folder to store data
   ansible.builtin.file:
-    path: "{{ ansible_env['HOME'] }}/docker/n8n/{{ item }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/docker/n8n/{{ item }}"
     state: directory
   loop:
     - data
@@ -13,7 +13,7 @@
     state: started
     restart_policy: always
     volumes:
-      - "{{ ansible_env['HOME'] }}/docker/n8n/data:/home/node/.n8n"
+      - "{{ ansible_facts['env']['HOME'] }}/docker/n8n/data:/home/node/.n8n"
     env:
       GENERIC_TIMEZONE: Europe/London
       TZ: Europe/London
