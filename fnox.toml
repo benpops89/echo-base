@@ -1,36 +1,30 @@
 default_provider = "pass"
 
-[providers.pass]
-type = "password-store"
-prefix = "fnox/"
+[providers.protonpass]
+type = "proton-pass"
+vault = "System"
 
 [secrets]
-SMTP_MAILER_FROM_ADDRESS= { provider = "pass", value = "SMTP_MAILER_FROM_ADDRESS" }
-FIZZY_SMTP_ADDRESS= { provider = "pass", value = "FIZZY_SMTP_ADDRESS" }
-FIZZY_SMTP_PORT= { provider = "pass", value = "FIZZY_SMTP_PORT" }
-FIZZY_SMTP_USERNAME= { provider = "pass", value = "FIZZY_SMTP_USERNAME" }
-FIZZY_SECRET_BASE_KEY= { provider = "pass", value = "FIZZY_SECRET_BASE_KEY" }
-FIZZY_SMTP_PASSWORD= { provider = "pass", value = "FIZZY_SMTP_PASSWORD" }
-TF_VAR_state_bucket= { provider = "pass", value = "TF_VAR_state_bucket" }
-TF_VAR_domain= { provider = "pass", value = "TF_VAR_domain" }
-TF_VAR_cloudflare_zone_id= { provider = "pass", value = "TF_VAR_cloudflare_zone_id" }
-TF_VAR_cloudflare_api_token= { provider = "pass", value = "TF_VAR_cloudflare_api_token" }
-TF_VAR_cloudflare_r2_token= { provider = "pass", value = "TF_VAR_cloudflare_r2_token" }
-TF_VAR_cloudflare_r2_account_id= { provider = "pass", value = "TF_VAR_cloudflare_r2_account_id" }
-CAMPFIRE_SECRET_BASE_KEY= { provider = "pass", value = "CAMPFIRE_SECRET_BASE_KEY" }
-CLOUDFLARE_API_TOKEN= { provider = "pass", value = "CLOUDFLARE_API_TOKEN" }
-POSTGRES_PASSWORD= { provider = "pass", value = "POSTGRES_PASSWORD" }
-KESTRA_DB_PASSWORD= { provider = "pass", value = "KESTRA_DB_PASSWORD" }
-READECK_DB_PASSWORD= { provider = "pass", value = "READECK_DB_PASSWORD" }
-LIBRECHAT_DB_PASSWORD= { provider = "pass", value = "LIBRECHAT_DB_PASSWORD" }
-MONGO_INITDB_ROOT_PASSWORD= { provider = "pass", value = "MONGO_INITDB_ROOT_PASSWORD" }
-LIBRECHAT_MONGODB_PASSWORD= { provider = "pass", value = "LIBRECHAT_MONGODB_PASSWORD" }
-MEILI_MASTER_KEY= { provider = "pass", value = "MEILI_MASTER_KEY" }
-LIBRECHAT_CREDS_KEY= { provider = "pass", value = "LIBRECHAT_CREDS_KEY" }
-LIBRECHAT_CREDS_IV= { provider = "pass", value = "LIBRECHAT_CREDS_IV" }
-LIBRECHAT_JWT_SECRET= { provider = "pass", value = "LIBRECHAT_JWT_SECRET" }
-LIBRECHAT_JWT_REFRESH_SECRET= { provider = "pass", value = "LIBRECHAT_JWT_REFRESH_SECRET" }
-LIBRECHAT_SMTP_USERNAME= { provider = "pass", value = "LIBRECHAT_SMTP_USERNAME" }
-LIBRECHAT_SMTP_PASSWORD= { provider = "pass", value = "LIBRECHAT_SMTP_PASSWORD" }
-FIZZY_API_BASE_URL= { provider = "pass", value = "FIZZY_API_BASE_URL" }
-FIZZY_API_TOKEN= { provider = "pass", value = "FIZZY_API_TOKEN" }
+CLOUDFLARE_API_TOKEN= { provider = "protonpass", value = "cloudflare/api_token" }
+POSTGRES_PASSWORD= { provider = "protonpass", value = "postgres/password" }
+KESTRA_DB_PASSWORD= { provider = "protonpass", value = "postgres/kestra_password" }
+READECK_DB_PASSWORD= { provider = "protonpass", value = "postgres/readeck_password" }
+LIBRECHAT_DB_PASSWORD= { provider = "protonpass", value = "postgres/librechat_password" }
+MONGO_INITDB_ROOT_PASSWORD= { provider = "protonpass", value = "mongo/password" }
+LIBRECHAT_MONGODB_PASSWORD= { provider = "protonpass", value = "mongo/librechat_password" }
+MEILI_MASTER_KEY= { provider = "protonpass", value = "meili/master_key" }
+FIZZY_API_BASE_URL= { provider = "protonpass", value = "fizzy/API_BASE_URL" }
+FIZZY_API_TOKEN= { provider = "protonpass", value = "fizzy/API_TOKEN" }
+
+FIZZY_MAILER_FROM_ADDRESS= { provider = "protonpass", value = "fizzy/MAILER_FROM_ADDRESS" }
+FIZZY_SMTP_ADDRESS= { provider = "protonpass", value = "fizzy/SMTP_ADDRESS" }
+FIZZY_SMTP_PORT= { provider = "protonpass", value = "fizzy/SMTP_PORT" }
+FIZZY_SMTP_USERNAME= { provider = "protonpass", value = "fizzy/SMTP_USERNAME" }
+FIZZY_SECRET_BASE_KEY= { provider = "protonpass", value = "fizzy/SECRET_BASE_KEY" }
+FIZZY_SMTP_PASSWORD= { provider = "protonpass", value = "fizzy/SMTP_PASSWORD" }
+TF_VAR_state_bucket= { provider = "protonpass", value = "terraform/state_bucket" }
+TF_VAR_domain= { provider = "protonpass", value = "terraform/domain" }
+TF_VAR_cloudflare_zone_id= { provider = "protonpass", value = "terraform/cloudflare_zone_id" }
+TF_VAR_cloudflare_api_token= { provider = "protonpass", value = "terraform/cloudflare_api_token" }
+TF_VAR_cloudflare_r2_token= { provider = "protonpass", value = "terraform/cloudflare_r2_token" }
+TF_VAR_cloudflare_r2_account_id= { provider = "protonpass", value = "terraform/cloudflare_r2_account_id" }
