@@ -4,4 +4,6 @@ roles:
 
 collections:
   - name: community.general
+  - name: community.postgresql
+  - name: community.mongodb
   - name: community.docker
